@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +22,7 @@ import xom.apriltraining.orderplace.service.OrderService;
  * 
  * */
 @RestController
-@RequestMapping(name = "/api/v1")
+@RequestMapping(value = "/api/v1")
 public class OrderPlaceController 
 {
 	private OrderService orderService;
@@ -29,20 +30,25 @@ public class OrderPlaceController
 	public OrderPlaceController(@Autowired OrderService orderService) {
 		this.orderService = orderService;
 	}
+	
+	@GetMapping("/value")
+	ResponseEntity<?> test()
+	{
+		return ResponseEntity.ok("Hey what the fuck");
+	}
 
 @PostMapping(value = "/order/action/place-order")
-ResponseEntity<?> placeorder(HttpHeaders headers,
+ResponseEntity<?> placeorder(@RequestHeader(required = false) HttpHeaders headers,
 		@RequestBody  CreateOrderRequest createOrderRequest)
 {
 	return ResponseEntity.ok(orderService.placeOrder(createOrderRequest));
 }
 
 @GetMapping("/order/action/get-order-status")
-ResponseEntity<?> getOrderStatus(HttpHeaders headers,
-		@RequestParam String orderId)
+ResponseEntity<?> getOrderStatus(@RequestHeader(required = false) HttpHeaders headers,
+		@RequestParam (defaultValue = "", required = true)String orderId)
 {
-return ResponseEntity.ok(orderService.getOrder(orderId));
-	
+return ResponseEntity.ok(orderService.getOrder(orderId));	
 }
 
 }

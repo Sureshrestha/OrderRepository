@@ -5,10 +5,12 @@ import java.util.Date;
 
 import javax.annotation.Generated;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -30,13 +32,14 @@ public class OrderEntity {
 	@Column(name = "ID")
 	private long id;
 	
-	@Column(name = "order_ID", unique = true)
+	@Column(name = "orderID", unique = true)
 	private String orderId;
 
-	@Column(name = "customer_ID")
+	@Column(name = "customerID")
 	private String customerId;
 	
-	@Column(name = "product_IDs")
+	@Column(name = "productIDs")
+	@ElementCollection(targetClass = String.class)
 	private List<String> productIds;
 	
 	@Column(name = "Amount")
@@ -45,6 +48,6 @@ public class OrderEntity {
 	@Column(name = "status")
 	private String status;
 	
-	@Column(name = "Time_Created")
+	@Column(name = "TimeCreated")
 	private Date timecreated;
 }

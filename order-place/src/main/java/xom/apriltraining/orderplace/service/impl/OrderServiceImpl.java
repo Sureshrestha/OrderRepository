@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import xom.apriltraining.orderplace.Entity.OrderEntity;
 import xom.apriltraining.orderplace.dao.OrderPlacerepository;
@@ -11,6 +12,7 @@ import xom.apriltraining.orderplace.models.CreateOrderRequest;
 import xom.apriltraining.orderplace.models.Order;
 import xom.apriltraining.orderplace.service.OrderService;
 
+@Service
 public class OrderServiceImpl implements OrderService{
 
 	
@@ -31,6 +33,7 @@ public class OrderServiceImpl implements OrderService{
 				.timecreated(new Date())
 				.build();
 		
+		orderPlacerepository.save(entity);
 		
 		return Order.builder()
 				.orderId(entity.getOrderId())
@@ -45,7 +48,7 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public Order getOrder(String orderId) {
 	
-		OrderEntity entity =  orderPlacerepository.findbyOrderId(orderId);
+		OrderEntity entity =  orderPlacerepository.findByOrderId(orderId);
 		
 		return Order.builder()
 				.orderId(entity.getOrderId())
