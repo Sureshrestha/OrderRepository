@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,6 +37,7 @@ public class OrderEntity {
 	@Column(name = "orderID", unique = true)
 	private String orderId;
 
+	
 	@Column(name = "customerID")
 	private String customerId;
 	

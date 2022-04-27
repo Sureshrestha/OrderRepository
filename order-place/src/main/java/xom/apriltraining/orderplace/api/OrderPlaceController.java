@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import xom.apriltraining.orderplace.models.CreateOrderRequest;
 import xom.apriltraining.orderplace.service.OrderService;
 
@@ -39,15 +41,14 @@ public class OrderPlaceController
 
 @PostMapping(value = "/order/action/place-order")
 ResponseEntity<?> placeorder(@RequestHeader(required = false) HttpHeaders headers,
-		@RequestBody  CreateOrderRequest createOrderRequest)
+		@RequestBody  CreateOrderRequest createOrderRequest) throws JsonProcessingException
 {
 	return ResponseEntity.ok(orderService.placeOrder(createOrderRequest));
 }
 
 @GetMapping("/order/action/get-order-status")
 ResponseEntity<?> getOrderStatus(@RequestHeader(required = false) HttpHeaders headers,
-		@RequestParam (defaultValue = "", required = true)String orderId)
-{
+		@RequestParam (defaultValue = "", required = true)String orderId) throws JsonProcessingException {
 return ResponseEntity.ok(orderService.getOrder(orderId));	
 }
 
